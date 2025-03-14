@@ -24,7 +24,6 @@ An AI-powered underwriting API that automates credit risk assessment. It evaluat
 | 🤖 **LangChain**  | Testing LLM-based AI agents |
 | 🎯 **Celery**  | Async test execution |
 | 🐳 **Docker**  | Containerized test environments |
-| 🔄 **Jenkins**  | CI/CD integration |
 | 📬 **Postman/Newman**  | API testing |
 | 🚀 **GitHub Actions**  | CI/CD pipeline |
 | 📊 **Locust**  | Performance testing |
