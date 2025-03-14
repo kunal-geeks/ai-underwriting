@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   app:
     build:
@@ -5,25 +7,27 @@ services:
       dockerfile: docker/Dockerfile.prod  
     container_name: underwriting_app
     restart: always
-      - ENV=dev
+    environment:
+      - ENV=prod
       - PYTHONPATH=/app
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/underwriting_dev
-      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
       - MAIL_SERVER=smtp
       - MAIL_PORT=587
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-    env_file:
-      - .env
     depends_on:
-      - db
-      - redis
-    expose:
-      - "8000"
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
       timeout: 10s
       retries: 5
+    command: ["poetry", "run", "gunicorn", "-w", "2", "--timeout", "120", "-b", "0.0.0.0:8000", "src.app:app"]
 
   nginx:
     image: nginx:latest
@@ -51,6 +55,11 @@ services:
       - "5432:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
 
   redis:
     image: redis:latest
@@ -59,8 +68,13 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - redis_data:/data  # Optional: Persist Redis data
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      retries: 3
+      timeout: 3s
 
 volumes:
   pg_data:
-  redis_data:  # Optional: Redis persistence
+  redis_data:
