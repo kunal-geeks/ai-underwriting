@@ -23,16 +23,16 @@ jobs:
 
       - name: Start Local Environment (Flask, DB, Redis, Nginx)
         run: |
-          docker-compose -f docker-compose.local.yml up --build -d
+          docker-compose -f docker/docker-compose.local.yml up --build -d
           echo "Waiting for services to be ready..."
-          sleep 10
+          sleep 15  # Allow services to start properly
 
       - name: Run Tests Inside Test Runner
         run: |
-          docker-compose -f docker-compose.local.yml run --rm test_runner || echo "TEST_FAILED=true" >> $GITHUB_ENV
+          docker-compose -f docker/docker-compose.local.yml run --rm test_runner || echo "TEST_FAILED=true" >> $GITHUB_ENV
 
       - name: Stop Docker Containers
-        run: docker-compose -f docker-compose.local.yml down
+        run: docker-compose -f docker/docker-compose.local.yml down
 
       - name: Upload Test Report
         if: always()
@@ -72,10 +72,33 @@ jobs:
           sudo systemctl enable docker
           docker --version
 
-      - name: Build and Run Docker in Production Mode
+      - name: Set Environment Variables
         run: |
-          docker-compose -f docker-compose.prod.yml up --build -d
+          echo "ENV=prod" >> $GITHUB_ENV
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+          echo "REDIS_URL=${{ secrets.REDIS_URL }}" >> $GITHUB_ENV
+          echo "MAIL_SERVER=smtp" >> $GITHUB_ENV
+          echo "MAIL_PORT=587" >> $GITHUB_ENV
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+
+      - name: Build and Run Docker in Production Mode
+        env:
+          ENV: prod
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          MAIL_SERVER: smtp
+          MAIL_PORT: 587
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          docker-compose -f docker/docker-compose.prod.yml up --build -d
+          echo "Waiting for services to stabilize..."
+          sleep 20  # Allow time for services to stabilize
 
       - name: Confirm Deployment
         run: |
+          echo "Checking if app is running..."
           curl -k https://localhost || exit 1
+
+      - name: Cleanup Unused Docker Resources
+        run: |
+          docker system prune -af
