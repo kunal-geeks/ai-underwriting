@@ -27,7 +27,7 @@ CORS(app)  # Allow CORS
 try:
     redis_connection = Redis.from_url(config["redis"]["url"], decode_responses=True)
     redis_connection.ping()
-    logger("✅ Connected to Redis successfully!")
+    logger.info(f"✅ Successfully connected to Redis !!!")
 except Exception as e:
     logger.error(f"Failed to connect to Redis: {e}")
     redis_connection = None
@@ -79,7 +79,6 @@ def add_security_headers(response):
     response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"  # Enforces HTTPS
     return response
 
-    
 if __name__ == '__main__':
     if os.environ.get("WERKZEUG_RUN_MAIN") == "true":  # Prevent duplicate logs in dev mode
         logger.info("🔄 Running Flask server...")
