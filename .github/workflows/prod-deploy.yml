@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Docker from Official Repo (Ubuntu 24.04 Fix)
+      - name: Install Docker from Official Repo (Fix for Ubuntu 24.04)
         run: |
           sudo apt-get update
           sudo apt-get install -y ca-certificates curl gnupg
@@ -28,19 +28,20 @@ jobs:
           sudo systemctl start docker
           sudo systemctl enable docker
           docker --version
+          docker compose version  # Verify Docker Compose
 
       - name: Start Local Environment (Flask, DB, Redis, Nginx)
         run: |
-          docker-compose -f docker/docker-compose.local.yml up --build -d
+          docker compose -f docker/docker-compose.local.yml up --build -d
           echo "Waiting for services to be ready..."
           sleep 15  # Allow services to start properly
 
       - name: Run Tests Inside Test Runner
         run: |
-          docker-compose -f docker/docker-compose.local.yml run --rm test_runner || echo "TEST_FAILED=true" >> $GITHUB_ENV
+          docker compose -f docker/docker-compose.local.yml run --rm test_runner || echo "TEST_FAILED=true" >> $GITHUB_ENV
 
       - name: Stop Docker Containers
-        run: docker-compose -f docker/docker-compose.local.yml down
+        run: docker compose -f docker/docker-compose.local.yml down
 
       - name: Upload Test Report
         if: always()
@@ -72,7 +73,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Docker from Official Repo (Ubuntu 24.04 Fix)
+      - name: Install Docker from Official Repo (Fix for Ubuntu 24.04)
         run: |
           sudo apt-get update
           sudo apt-get install -y ca-certificates curl gnupg
@@ -87,6 +88,7 @@ jobs:
           sudo systemctl start docker
           sudo systemctl enable docker
           docker --version
+          docker compose version  # Verify Docker Compose
 
       - name: Set Environment Variables
         run: |
@@ -106,7 +108,7 @@ jobs:
           MAIL_PORT: 587
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          docker-compose -f docker/docker-compose.prod.yml up --build -d
+          docker compose -f docker/docker-compose.prod.yml up --build -d
           echo "Waiting for services to stabilize..."
           sleep 20  # Allow time for services to stabilize
 
