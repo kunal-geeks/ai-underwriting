@@ -7,7 +7,7 @@ __pycache__/
 *.swo
 *.egg-info/
 venv/
-.env
+docker/.env
 *.log
 
 # Ignore IDE/editor-specific files
@@ -30,4 +30,3 @@ coverage.xml
 htmlcov/
 
 # Ignore unnecessary dependencies
-
