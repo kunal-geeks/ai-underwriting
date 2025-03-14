@@ -13,16 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Docker from Official Repo (Fix for Ubuntu 24.04)
+      - name: Install Docker (Fix for Ubuntu 24.04)
         run: |
           sudo apt-get update
           sudo apt-get install -y ca-certificates curl gnupg
           sudo install -m 0755 -d /etc/apt/keyrings
           curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
           sudo chmod a+r /etc/apt/keyrings/docker.asc
-          echo \
-            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-            $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
           sudo apt-get update
           sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
           sudo systemctl start docker
@@ -30,8 +28,9 @@ jobs:
           docker --version
           docker compose version  # Verify Docker Compose
 
-      - name: Create Temporary .env File
+      - name: Create Temporary .env File (if missing)
         run: |
+          touch .env
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
           echo "REDIS_URL=${{ secrets.REDIS_URL }}" >> .env
           echo "MAIL_SERVER=smtp" >> .env
@@ -44,10 +43,12 @@ jobs:
 
       - name: Run Tests Inside Test Runner
         run: |
-          docker compose -f docker/docker-compose-local.yml run --rm test_runner || echo "TEST_FAILED=true" >> $GITHUB_ENV
+          docker compose -f docker/docker-compose-local.yml run --rm test_runner || exit 1
 
-      - name: Stop Docker Containers
-        run: docker compose -f docker/docker-compose-local.yml down
+      - name: Stop & Cleanup Docker Containers
+        run: |
+          docker compose -f docker/docker-compose-local.yml down
+          docker system prune -af
 
       - name: Upload Test Report
         if: always()
@@ -57,7 +58,7 @@ jobs:
           path: reports/test_report.html
 
       - name: Send Email on Failure
-        if: env.TEST_FAILED == 'true'
+        if: failure()
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -79,16 +80,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Docker from Official Repo (Fix for Ubuntu 24.04)
+      - name: Install Docker (Fix for Ubuntu 24.04)
         run: |
           sudo apt-get update
           sudo apt-get install -y ca-certificates curl gnupg
           sudo install -m 0755 -d /etc/apt/keyrings
           curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
           sudo chmod a+r /etc/apt/keyrings/docker.asc
-          echo \
-            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-            $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
           sudo apt-get update
           sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
           sudo systemctl start docker
@@ -96,8 +95,9 @@ jobs:
           docker --version
           docker compose version  # Verify Docker Compose
 
-      - name: Create Temporary .env File
+      - name: Create Temporary .env File (if missing)
         run: |
+          touch .env
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
           echo "REDIS_URL=${{ secrets.REDIS_URL }}" >> .env
           echo "MAIL_SERVER=smtp" >> .env
@@ -108,11 +108,11 @@ jobs:
         run: |
           docker compose --env-file .env -f docker/docker-compose-prod.yml up --build -d
 
-
       - name: Confirm Deployment
         run: |
           echo "Checking if app is running..."
-          curl -k https://localhost || exit 1
+          sleep 10  # Give it time to start
+          curl -sSf http://localhost:8080/health || (echo "App not running!" && exit 1)
 
       - name: Cleanup Unused Docker Resources
         run: docker system prune -af
