@@ -26,7 +26,7 @@ services:
       - "5001:5001"
     working_dir: /app
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://underwriting_app_local/health"]
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:5001/health"]
       interval: 30s
       retries: 3
       timeout: 10s
