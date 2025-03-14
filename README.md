@@ -67,6 +67,18 @@ docker compose -f docker/docker-compose-local.yml --env-file .env down
 
 ---
 
+## 📊 Run Performance Tests with Locust
+
+To start **performance testing** using Locust, run the following command:
+```bash
+locust -f src/tests/api/non-functional/performance/locustfile.py --host=http://127.0.0.1:5001
+```
+
+Once Locust is running, open your browser and go to:
+📌 **http://127.0.0.1:8089** to start the test.
+
+---
+
 ## 🔗 API Endpoints
 
 ### 🚀 Underwrite Loan Request
@@ -127,5 +139,5 @@ The AI-powered underwriting system provides a robust, scalable, and automated ap
 
 ## 📌 Author
 🔹 **Kunal Geeks**  
-💻 [GitHub](https://github.com/kunal-geeks) | 🐦 [Twitter](https://x.com/kunal_ucet) | 📧 Email: kunal.sdet001@gmail.com
+💻 [GitHub](https://github.com/kunal-geeks) | 🐦 [Twitter](https://twitter.com/kunalgeeks) | 📧 Email: kunal@geeks.dev
 
