@@ -39,31 +39,38 @@ An AI-powered underwriting API that automates credit risk assessment. It evaluat
  cd ai-underwriting
 ```
 
-### 2️⃣ Run with Docker Compose(On your local machine)
+### 2️⃣ Run with Docker Compose (On Your Local Machine)
 
 🔹 **Create a `.env` file** inside the `docker` folder and add your `OPENAI_API_KEY` before proceeding.
 
-🔹 **Rebuild the image without cache:**
+#### 💻 For **MacOS/Linux:**
 ```bash
 docker compose -f docker/docker-compose-local.yml --env-file .env build --no-cache
 ```
-
-🔹 **Start the containers:**
 ```bash
 docker compose -f docker/docker-compose-local.yml --env-file .env up
 ```
-
-🔹 **Stop the containers:**
 ```bash
 docker compose -f docker/docker-compose-local.yml --env-file .env down
 ```
-
-🔹 **Rebuild and force recreate containers:**
 ```bash
 docker compose -f docker/docker-compose-local.yml up --build --force-recreate
 ```
-✅ This command will **build the containers from scratch and force recreate** them to ensure all dependencies and configurations are properly applied, avoiding issues caused by stale configurations.
+✅ This command **rebuilds** the containers from scratch and **forces recreation** to apply all dependencies and configurations.
 
+#### 🖥️ For **Windows (PowerShell):**
+```powershell
+docker-compose -f docker/docker-compose-local.yml --env-file .env build --no-cache
+```
+```powershell
+docker-compose -f docker/docker-compose-local.yml --env-file .env up
+```
+```powershell
+docker-compose -f docker/docker-compose-local.yml --env-file .env down
+```
+```powershell
+docker-compose -f docker/docker-compose-local.yml up --build --force-recreate
+```
 🌍 The API will be available at: `http://underwriting_app_local:5001`
 
 ---
@@ -73,13 +80,18 @@ docker compose -f docker/docker-compose-local.yml up --build --force-recreate
 
 ---
 
-## 📊 Run Performance Tests with Locust(On your local machine)
+## 📊 Run Performance Tests with Locust (On Your Local Machine)
 
-To start **performance testing** using Locust, run the following command:
+To start **performance testing** using Locust:
+
+#### 💻 For **MacOS/Linux:**
 ```bash
 locust -f src/tests/api/non-functional/performance/locustfile.py --host=http://127.0.0.1:5000
 ```
-
+#### 🖥️ For **Windows (PowerShell):**
+```powershell
+locust -f src/tests/api/non-functional/performance/locustfile.py --host=http://127.0.0.1:5000
+```
 Once Locust is running, open your browser and go to:
 📌 **http://127.0.0.1:8089** to start the test.
 
