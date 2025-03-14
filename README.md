@@ -58,6 +58,12 @@ docker compose -f docker/docker-compose-local.yml --env-file .env up
 docker compose -f docker/docker-compose-local.yml --env-file .env down
 ```
 
+🔹 **Rebuild and force recreate containers:**
+```bash
+docker compose -f docker/docker-compose-local.yml up --build --force-recreate
+```
+✅ This command will **build the containers from scratch and force recreate** them to ensure all dependencies and configurations are properly applied, avoiding issues caused by stale configurations.
+
 🌍 The API will be available at: `http://underwriting_app_local:5001`
 
 ---
@@ -71,7 +77,7 @@ docker compose -f docker/docker-compose-local.yml --env-file .env down
 
 To start **performance testing** using Locust, run the following command:
 ```bash
-locust -f src/tests/api/non-functional/performance/locustfile.py --host=http://127.0.0.1:5001
+locust -f src/tests/api/non-functional/performance/locustfile.py --host=http://127.0.0.1:5000
 ```
 
 Once Locust is running, open your browser and go to:
@@ -138,6 +144,6 @@ The AI-powered underwriting system provides a robust, scalable, and automated ap
 ---
 
 ## 📌 Author
-🔹 **Kunal Sharma**  
-💻 [GitHub](https://github.com/kunal-geeks) | 🐦 [Twitter](https://twitter.com/kunalgeeks) | 📧 Email: kunal@geeks.dev
+🔹 **Kunal Geeks**  
+💻 [GitHub](https://github.com/kunal-geeks) | 🐦 [Twitter](https://x.com/kunal_ucet) | 📧 Email: kunal.sdet001@gmail.com
 
