@@ -151,7 +151,7 @@ Once Locust is running, open your browser and go to:
 ---
 
 ## 🎯 Conclusion
-The AI-powered underwriting system provides a robust, scalable, and automated approach to loan risk assessment. With a strong focus on fairness, security, and performance, this project is set to revolutionize AI-driven lending. 🚀💰
+The AI-powered underwriting system provides a robust, scalable, and automated approach to loan risk assessment. With a strong focus on fairness, security, and performance, this project is set to revolutionize AI-driven lending 🚀💰
 
 ---
 
