@@ -1,16 +1,31 @@
-# Use Python base image
 FROM python:3.10.13
 
-# Set working directory
+# Set environment variables
+ENV POETRY_VERSION=2.1.1 
+
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy dependency files from project root
-COPY ../pyproject.toml ../poetry.lock ./
-RUN pip install --upgrade pip && pip install poetry && poetry install --no-dev
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy project files
-COPY src/ /app/src
-COPY config/gunicorn_config.py /app/config/
+# Copy Poetry files first to leverage caching
+COPY pyproject.toml poetry.lock ./
+
+# Install Poetry
+RUN pip install --no-cache-dir "poetry==$POETRY_VERSION"
+
+# Install project dependencies
+COPY . .
+RUN poetry install --no-interaction --no-root
+
+# Copy source code last (prevents unnecessary rebuilds)
+COPY . .
+
+# Set correct permissions
+RUN chmod -R 755 /app
 
 # Expose port
 EXPOSE 8000
