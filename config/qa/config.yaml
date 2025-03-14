@@ -1,0 +1,10 @@
+app:
+  debug: false
+  host: "0.0.0.0"
+  port: 5001
+database:
+  uri: "postgresql://qa_user:qa_pass@qa_db_host/qa_db"
+logging:
+  level: "INFO"
+redis:
+  url: redis://redis:6379/0

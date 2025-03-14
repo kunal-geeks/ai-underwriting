@@ -1,0 +1,10 @@
+app:
+  debug: false
+  host: "0.0.0.0"
+  port: 8000
+database:
+  uri: "postgresql://prod_user:prod_pass@prod_db_host/prod_db"
+logging:
+  level: "WARNING"
+redis:
+  url: redis://redis:6379/0

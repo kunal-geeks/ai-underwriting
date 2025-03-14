@@ -1,0 +1,12 @@
+app:
+  debug: true
+  host: "0.0.0.0"
+  port: 5001
+database:
+  uri: "sqlite:///dev.db"
+logging:
+  level: "DEBUG"
+redis:
+  url: redis://redis:6379/0
+
+

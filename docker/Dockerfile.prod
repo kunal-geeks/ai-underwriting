@@ -1,0 +1,19 @@
+# Use Python base image
+FROM python:3.10.13
+
+# Set working directory
+WORKDIR /app
+
+# Copy dependency files from project root
+COPY ../pyproject.toml ../poetry.lock ./
+RUN pip install --upgrade pip && pip install poetry && poetry install --no-dev
+
+# Copy project files
+COPY src/ /app/src
+COPY config/gunicorn_config.py /app/config/
+
+# Expose port
+EXPOSE 8000
+
+# Run Gunicorn
+CMD ["poetry", "run", "gunicorn", "-c", "/app/config/gunicorn_config.py", "src.app:app"]

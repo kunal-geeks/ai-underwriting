@@ -1,0 +1,101 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    container_name: underwriting_app_local
+    restart: always
+    environment:
+      - ENV=dev
+      - PYTHONPATH=/app
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/underwriting_dev
+      - REDIS_URL=redis://redis:6379/0
+      - MAIL_SERVER=smtp
+      - MAIL_PORT=587
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    env_file:
+      - .env     
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ../src:/app/src
+    ports:
+      - "5001:5001"
+    working_dir: /app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:5001/health"]
+      interval: 30s
+      retries: 3
+      timeout: 10s
+
+  test_runner:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    container_name: underwriting_test_runner
+    depends_on:
+      app:
+        condition: service_healthy
+    environment:
+      - ENV=dev
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    env_file:
+      - .env     
+    volumes:
+      - ../src:/app/src
+      - ../reports:/app/reports  # Mounts 'reports/' for test reports
+      - ../generated_data:/app/generated_data  # Mounts 'generated_data/' for AI-generated documents
+
+    command: >
+      sh -c "
+        echo 'Waiting for Flask to be ready...' &&
+        sleep 10 &&
+        poetry run pytest --cov=src --cov-report=xml --html=reports/test_report.html --self-contained-html
+      "
+
+  nginx:
+    image: nginx:latest
+    container_name: underwriting_nginx_local
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ../config/nginx/nginx-local.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+
+  db:
+    image: postgres:15
+    container_name: underwriting_db_local
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: underwriting_dev
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_data_local:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+
+  redis:
+    image: redis:latest
+    container_name: underwriting_redis_local
+    restart: always
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      retries: 3
+      timeout: 3s
+
+volumes:
+  pg_data_local:

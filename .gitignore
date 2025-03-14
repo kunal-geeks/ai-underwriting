@@ -1,0 +1,72 @@
+# --- General Python ---
+__pycache__/
+*.py[cod]
+*.swp
+*.swo
+*.log
+*.DS_Store
+
+# --- Virtual Environments ---
+.venv/
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.iml
+
+# --- Poetry ---
+poetry.lock
+
+# --- Docker ---
+docker/.env  # Ignore environment file inside Docker
+docker/nginx/ssl/  # Ignore self-signed SSL certificates
+docker/*.log
+
+# --- Logs & Reports ---
+logs/
+*.log
+reports/
+generated_data/
+*.out
+*.err
+
+# --- Test & Coverage ---
+htmlcov/
+coverage.xml
+*.cover
+*.cov
+tests/__pycache__/
+tests/.pytest_cache/
+tests/results/
+*.pytest_cache
+*.coverage
+
+# --- Build Files ---
+dist/
+build/
+.eggs/
+*.egg-info/
+*.egg
+
+# --- Database & Cache ---
+db.sqlite3
+*.db
+*.sqlite
+*.sql
+__snapshots__
+
+# --- Machine Learning & AI ---
+models/
+*.h5
+*.pkl
+*.pt
+*.onnx
+
+# --- OS-Specific ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini

@@ -1,0 +1,33 @@
+# Ignore Python cache and virtual environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.egg-info/
+venv/
+.env
+*.log
+
+# Ignore IDE/editor-specific files
+.vscode/
+.idea/
+*.iml
+
+# Ignore OS-generated files
+.DS_Store
+Thumbs.db
+
+# Ignore Git-related files
+.git/
+.gitignore
+
+# Ignore test artifacts
+tests/__pycache__/
+reports/
+coverage.xml
+htmlcov/
+
+# Ignore unnecessary dependencies
+
