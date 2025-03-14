@@ -83,13 +83,19 @@ docker-compose -f docker/docker-compose-local.yml up --build --force-recreate
 
 To start **performance testing** using Locust:
 
+- First start the flask server locally by following command:
+```bash
+  poetry run python src/app.py
+```
+🌍 The API will be available at: `http://127.0.0.1:5001`
+
 #### 💻 For **MacOS/Linux:**
 ```bash
-locust -f src/tests/api/non-functional/performance/locustfile.py --host=http://127.0.0.1:5000
+locust -f src/tests/api/non-functional/performance/locustfile.py --host=http://127.0.0.1:5001
 ```
 #### 🖥️ For **Windows (PowerShell):**
 ```powershell
-locust -f src/tests/api/non-functional/performance/locustfile.py --host=http://127.0.0.1:5000
+locust -f src/tests/api/non-functional/performance/locustfile.py --host=http://127.0.0.1:5001
 ```
 Once Locust is running, open your browser and go to:
 📌 **http://127.0.0.1:8089** to start the test.
