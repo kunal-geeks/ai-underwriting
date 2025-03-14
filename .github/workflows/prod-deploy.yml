@@ -40,7 +40,7 @@ jobs:
 
       - name: Deploy with Docker Compose
         run: |
-          docker compose --env-file .env -f docker/docker-compose-prod.yml up --build -d
+          docker compose --env-file .env -f docker/docker-compose-local.yml up --build -d
 
       - name: Run Tests Inside Test Runner
         run: |
