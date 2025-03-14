@@ -32,13 +32,13 @@ jobs:
 
       - name: Start Local Environment (Flask, DB, Redis, Nginx)
         run: |
-          docker compose -f docker/docker-compose.local.yml up --build -d
+          docker compose -f docker/docker-compose-local.yml up --build -d
           echo "Waiting for services to be ready..."
           sleep 15  # Allow services to start properly
 
       - name: Run Tests Inside Test Runner
         run: |
-          docker compose -f docker/docker-compose.local.yml run --rm test_runner || echo "TEST_FAILED=true" >> $GITHUB_ENV
+          docker compose -f docker/docker-compose-local.yml run --rm test_runner || echo "TEST_FAILED=true" >> $GITHUB_ENV
 
       - name: Stop Docker Containers
         run: docker compose -f docker/docker-compose.local.yml down
@@ -108,7 +108,7 @@ jobs:
           MAIL_PORT: 587
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          docker compose -f docker/docker-compose.prod.yml up --build -d
+          docker compose -f docker/docker-compose-prod.yml up --build -d
           echo "Waiting for services to stabilize..."
           sleep 20  # Allow time for services to stabilize
 
