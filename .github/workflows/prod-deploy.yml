@@ -42,7 +42,7 @@ jobs:
 
       - name: Deploy with Docker Compose
         run: |
-          retries=3
+          retries=1
           for i in $(seq 1 $retries); do
             docker compose --env-file docker/.env -f docker/docker-compose-local.yml up --build -d && break
             echo "Retrying in 10s..."
