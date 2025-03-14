@@ -90,6 +90,92 @@ jobs:
           docker --version
           docker compose version  # Verify Docker Compose
 
+name: Full CI/CD Pipeline with Server Setup
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo systemctl start docker
+          sudo systemctl enable docker
+          docker --version
+
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+
+      - name: Start Local Environment (Flask, DB, Redis, Nginx)
+        run: |
+          docker-compose -f docker/docker-compose.local.yml up --build -d
+          echo "Waiting for services to be ready..."
+          sleep 15  # Allow services to start properly
+
+      - name: Run Tests Inside Test Runner
+        run: |
+          docker-compose -f docker/docker-compose.local.yml run --rm test_runner || echo "TEST_FAILED=true" >> $GITHUB_ENV
+
+      - name: Stop Docker Containers
+        run: docker-compose -f docker/docker-compose.local.yml down
+
+      - name: Upload Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: reports/test_report.html
+
+      - name: Send Email on Failure
+        if: env.TEST_FAILED == 'true'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USER }}
+          password: ${{ secrets.EMAIL_PASS }}
+          subject: "🚨 AI Underwriting Test Failed!"
+          body: "Please check the attached test report."
+          attachments: "reports/test_report.html"
+          to: "kunal.vbu@gmail.com, info.tutorride@gmail.com"
+          from: "test24.py@gmail.com"
+
+  deploy:
+    needs: test
+    if: success()
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo systemctl start docker
+          sudo systemctl enable docker
+          docker --version
+
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+
       - name: Set Environment Variables
         run: |
           echo "ENV=prod" >> $GITHUB_ENV
@@ -108,15 +194,11 @@ jobs:
           MAIL_PORT: 587
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          docker compose -f docker/docker-compose-prod.yml up --build -d
+          docker-compose --env-file <(env | grep -E 'DATABASE_URL|REDIS_URL|MAIL_SERVER|MAIL_PORT|OPENAI_API_KEY') \
+            -f docker/docker-compose.prod.yml up --build -d
           echo "Waiting for services to stabilize..."
           sleep 20  # Allow time for services to stabilize
 
       - name: Confirm Deployment
         run: |
-          echo "Checking if app is running..."
           curl -k https://localhost || exit 1
-
-      - name: Cleanup Unused Docker Resources
-        run: |
-          docker system prune -af
