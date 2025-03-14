@@ -30,14 +30,17 @@ jobs:
           docker --version
           docker compose version  # Verify Docker Compose
 
+      - name: Create Temporary .env File
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
+          echo "REDIS_URL=${{ secrets.REDIS_URL }}" >> .env
+          echo "MAIL_SERVER=smtp" >> .env
+          echo "MAIL_PORT=587" >> .env
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
+
       - name: Deploy with Docker Compose
         run: |
-          docker compose -f docker/docker-compose-local.yml up --build -d \
-            -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-            -e REDIS_URL=${{ secrets.REDIS_URL }} \
-            -e MAIL_SERVER=smtp \
-            -e MAIL_PORT=587 \
-            -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+          docker compose --env-file .env -f docker/docker-compose-prod.yml up --build -d
 
       - name: Run Tests Inside Test Runner
         run: |
@@ -93,14 +96,18 @@ jobs:
           docker --version
           docker compose version  # Verify Docker Compose
 
+      - name: Create Temporary .env File
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
+          echo "REDIS_URL=${{ secrets.REDIS_URL }}" >> .env
+          echo "MAIL_SERVER=smtp" >> .env
+          echo "MAIL_PORT=587" >> .env
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
+
       - name: Deploy with Docker Compose in Production Mode
         run: |
-          docker compose -f docker/docker-compose-prod.yml up --build -d \
-            -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-            -e REDIS_URL=${{ secrets.REDIS_URL }} \
-            -e MAIL_SERVER=smtp \
-            -e MAIL_PORT=587 \
-            -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+          docker compose --env-file .env -f docker/docker-compose-prod.yml up --build -d
+
 
       - name: Confirm Deployment
         run: |
