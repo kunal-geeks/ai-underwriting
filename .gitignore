@@ -20,7 +20,7 @@ docker/.env
 *.iml
 
 # --- Poetry ---
-poetry.lock
+
 
 # --- Docker ---
 docker/.env  # Ignore environment file inside Docker
