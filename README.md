@@ -39,7 +39,7 @@ An AI-powered underwriting API that automates credit risk assessment. It evaluat
  cd ai-underwriting
 ```
 
-### 2️⃣ Run with Docker Compose
+### 2️⃣ Run with Docker Compose(On your local machine)
 
 🔹 **Create a `.env` file** inside the `docker` folder and add your `OPENAI_API_KEY` before proceeding.
 
@@ -73,7 +73,7 @@ docker compose -f docker/docker-compose-local.yml up --build --force-recreate
 
 ---
 
-## 📊 Run Performance Tests with Locust
+## 📊 Run Performance Tests with Locust(On your local machine)
 
 To start **performance testing** using Locust, run the following command:
 ```bash
