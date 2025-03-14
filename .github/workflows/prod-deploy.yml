@@ -30,18 +30,14 @@ jobs:
           docker --version
           docker compose version  # Verify Docker Compose
 
-      - name: Start Local Environment (Flask, DB, Redis, Nginx)
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          REDIS_URL: ${{ secrets.REDIS_URL }}
-          MAIL_SERVER: smtp
-          MAIL_PORT: 587
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      - name: Deploy with Docker Compose
         run: |
-          docker compose --env-file <(env | grep -E 'DATABASE_URL|REDIS_URL|MAIL_SERVER|MAIL_PORT|OPENAI_API_KEY') \
-            -f docker/docker-compose-local.yml up --build -d
-          echo "Waiting for services to be ready..."
-          sleep 15  # Allow services to start properly
+          docker compose -f docker/docker-compose-local.yml up --build -d \
+            -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+            -e REDIS_URL=${{ secrets.REDIS_URL }} \
+            -e MAIL_SERVER=smtp \
+            -e MAIL_PORT=587 \
+            -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
 
       - name: Run Tests Inside Test Runner
         run: |
@@ -97,18 +93,14 @@ jobs:
           docker --version
           docker compose version  # Verify Docker Compose
 
-      - name: Build and Run Docker in Production Mode
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          REDIS_URL: ${{ secrets.REDIS_URL }}
-          MAIL_SERVER: smtp
-          MAIL_PORT: 587
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      - name: Deploy with Docker Compose in Production Mode
         run: |
-          docker compose --env-file <(env | grep -E 'DATABASE_URL|REDIS_URL|MAIL_SERVER|MAIL_PORT|OPENAI_API_KEY') \
-            -f docker/docker-compose.prod.yml up --build -d
-          echo "Waiting for services to stabilize..."
-          sleep 20  # Allow time for services to stabilize
+          docker compose -f docker/docker-compose-prod.yml up --build -d \
+            -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+            -e REDIS_URL=${{ secrets.REDIS_URL }} \
+            -e MAIL_SERVER=smtp \
+            -e MAIL_PORT=587 \
+            -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
 
       - name: Confirm Deployment
         run: |
