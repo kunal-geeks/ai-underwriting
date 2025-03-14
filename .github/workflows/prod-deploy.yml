@@ -30,19 +30,24 @@ jobs:
           docker --version
           docker compose version  # Verify Docker Compose
 
-      - name: Create Temporary .env File (if missing)
+      - name: Create Temporary .env File
         run: |
-          mkdir -p docker  # Ensure the docker directory exists
           touch docker/.env
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > docker/.env
           echo "REDIS_URL=${{ secrets.REDIS_URL }}" >> docker/.env
           echo "MAIL_SERVER=smtp" >> docker/.env
           echo "MAIL_PORT=587" >> docker/.env
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> docker/.env
+          chmod 644 docker/.env
 
       - name: Deploy with Docker Compose
         run: |
-          docker compose --env-file docker/.env -f docker/docker-compose-local.yml up --build -d
+          retries=3
+          for i in $(seq 1 $retries); do
+            docker compose --env-file docker/.env -f docker/docker-compose-local.yml up --build -d && break
+            echo "Retrying in 10s..."
+            sleep 10
+          done
 
       - name: Run Tests Inside Test Runner
         run: |
@@ -98,15 +103,15 @@ jobs:
           docker --version
           docker compose version  # Verify Docker Compose
 
-      - name: Create Temporary .env File (if missing)
+      - name: Create Temporary .env File
         run: |
-          mkdir -p docker  # Ensure the docker directory exists
           touch docker/.env
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > docker/.env
           echo "REDIS_URL=${{ secrets.REDIS_URL }}" >> docker/.env
           echo "MAIL_SERVER=smtp" >> docker/.env
           echo "MAIL_PORT=587" >> docker/.env
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> docker/.env
+          chmod 644 docker/.env
 
       - name: Deploy with Docker Compose in Production Mode
         run: |
