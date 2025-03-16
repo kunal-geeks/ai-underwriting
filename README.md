@@ -161,6 +161,6 @@ The AI-powered underwriting system provides a robust, scalable, and automated ap
 ---
 
 ## 📌 Author
-🔹 **Kunal Geeks**  
+🔹 **Kunal Sharma**  
 💻 [GitHub](https://github.com/kunal-geeks) | 🐦 [Twitter](https://x.com/kunal_ucet) | 📧 Email: kunal.sdet001@gmail.com
 
