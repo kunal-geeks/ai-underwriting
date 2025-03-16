@@ -48,42 +48,6 @@ ai-underwriting/
 │   │   ├── prod_deploy.yml   # CI/CD deployment workflow for production
 ├── docs/                     # Project documentation
 │   └── design.md             # Design and architecture decisions
-├── src/                      # Source code
-│   ├── __init__.py           # Package initialization
-│   ├── app.py                # Flask application entry point
-│   ├── logger.py             # Logging utility
-│   ├── loguru_logger.py      # Enhanced logging with Loguru
-│   ├── setup.py              # Setup script for package installation
-│   ├── pytest.ini            # Pytest configuration file
-│   ├── api/                  # API-related files (Flask)
-│   │   ├── __init__.py       # API entry point
-│   │   ├── routes.py         # Define all API endpoints
-│   │   └── config.py         # API-specific configurations (environment vars, secrets)
-│   ├── ai_agent/             # AI model and agent-related code
-│   │   ├── __init__.py       # AI agent initialization
-│   │   ├── model.py          # AI model code (LangChain or similar)
-│   │   ├── utils.py          # Helper functions (data preprocessing, post-processing)
-│   ├── tests/                # Test-related files (unit, integration, system, security, etc.)
-│       │── __init__.py        # Test package initialization
-│       │── unit/              # Unit tests
-│       │   ├── __init__.py    # Unit test initialization
-│       │   ├── test_agent.py  # AI agent unit tests
-│       │   ├── test_api.py    # API unit tests
-│       │── integration/       # Integration tests
-│       │   ├── __init__.py    # Integration test initialization
-│       │   ├── test_api.py    # API integration tests
-│       │── system/            # Full system tests
-│       │   ├── __init__.py    # System test initialization
-│       │   ├── test_end_to_end.py  # End-to-end system tests
-│       │── security/          # Security testing
-│       │   ├── __init__.py    # Security test initialization
-│       │   ├── test_security.py    # Security testing (prompt injection, vulnerabilities)
-│       │── fairness/          # Fairness & bias validation
-│       │   ├── __init__.py    # fairness test initialization
-│       │   ├── test_fairness.py    # Bias and fairness validation
-│       │── auto_test/         # AI-driven self-healing test cases
-│       │   ├── __init__.py    # auto test initialization
-│       │   ├── test_auto_test.py   # AI-driven self-healing test cases
 ├── config/                   # Configuration files for different environments
 │   ├── dev/                  # Development configuration
 │   │   ├── config.yml        # Dev environment config
@@ -104,6 +68,54 @@ ai-underwriting/
 │   ├── Dockerfile.prod       # Dockerfile for production environment
 │   ├── docker-compose-local.yml # Local Docker Compose configuration
 │   ├── docker-compose-prod.yml # Production Docker Compose configuration
+├── src/                      # Source code
+│   ├── __init__.py           # Package initialization
+│   ├── app.py                # Flask application entry point
+│   ├── logger.py             # Logging utility
+│   ├── loguru_logger.py      # Enhanced logging with Loguru
+│   ├── setup.py              # Setup script for package installation
+│   ├── pytest.ini            # Pytest configuration file
+│   ├── api/                  # API-related files (Flask)
+│   │   ├── __init__.py       # API entry point
+│   │   ├── routes.py         # Define all API endpoints
+│   │   └── config.py         # API-specific configurations (environment vars, secrets)
+│   ├── ai_agent/             # AI model and agent-related code
+│   │   ├── __init__.py       # AI agent initialization
+│   │   ├── model.py          # AI model code (LangChain or similar)
+│   │   ├── utils.py          # Helper functions (data preprocessing, post-processing)
+│   ├── tests/                # Testing Framework
+│       │── __init__.py             # Test package initialization
+│       │── api/                    # API testing
+│       │   │── __init__.py         # API test package initialization
+│       │   │── functional/         # Functional tests
+│       │   │   ├── __init__.py     # Functional test initialization
+│       │   │   ├── unit/           # Unit tests
+│       │   │   │   ├── __init__.py # Unit test initialization
+│       │   │   │   ├── test_agent.py  # AI agent unit tests
+│       │   │   │   ├── test_api.py    # API unit tests
+│       │   │   ├── integration/    # Integration tests
+│       │   │   │   ├── __init__.py # Integration test initialization
+│       │   │   │   ├── test_api.py # API integration tests
+│       │   │   ├── system/         # Full system tests
+│       │   │   │   ├── __init__.py # System test initialization
+│       │   │   │   ├── test_end_to_end.py # End-to-end system tests
+│       │   │   ├── auto_test/      # AI-driven self-healing test cases
+│       │   │       ├── __init__.py # Auto test initialization
+│       │   │       ├── test_auto_test.py # AI-driven self-healing test cases
+│       │   │── non-functional/     # Non-functional tests
+│       │       ├── __init__.py     # Non-functional test initialization
+│       │       ├── performance/    # Performance tests
+│       │       │   ├── __init__.py # Performance test initialization
+│       │       │   ├── test_performance.py # Performance testing
+│       │       │   ├── locustfile.py # Load testing with Locust
+│       │       ├── security/       # Security testing
+│       │       │   ├── __init__.py # Security test initialization
+│       │       │   ├── test_security.py # Security testing (prompt injection, vulnerabilities)
+│       │       ├── fairness/       # Fairness & bias validation
+│       │           ├── __init__.py # Fairness test initialization
+│       │           ├── test_fairness.py # Bias and fairness validation
+│       │── ui/                     # UI Testing
+│           ├── __init__.py         # UI test initialization
 ├── reports/                  # Test reports and logs
 ├── Jenkinsfile               # CI/CD pipeline for Jenkins
 ├── README.md                 # Project overview and setup instructions
