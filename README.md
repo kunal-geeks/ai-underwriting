@@ -14,7 +14,7 @@ With AI playing a crucial role in underwriting, credit scoring, and fraud detect
 ✅ **Prompt Injection & Security Testing** - Simulates malicious inputs to test robustness against AI vulnerabilities.  
 ✅ **Self-Healing Test Cases** - AI-driven auto-correction of failed test cases.  
 ✅ **CI/CD Pipeline with GitHub Actions** - Fully automated testing and deployment process.  
-✅ **Containerized Deployment** - Runs in a Dockerized environment with cloud integration.  
+✅ **Containerized Deployment** - Runs in a Dockerized environment.  
 ✅ **Performance & Load Testing** - Uses Locust for high-volume testing and response time validation.  
 
 This AI-powered testing framework ensures the reliability and fairness of AI agents used in fintech, helping lenders make data-driven and ethical loan decisions. 🚀💰
