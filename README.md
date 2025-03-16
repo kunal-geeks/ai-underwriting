@@ -1,24 +1,23 @@
-AI-Powered Testing Automation for AI Agents in Fintech
+# AI-Powered Testing Automation for AI Agents in Fintech
 
-📌 Project Description
+## 📌 Project Description
 
 This project introduces an industry-level AI-driven test automation system designed specifically for testing AI agents utilized in fintech lending. The system focuses on validating AI models, large language models (LLMs), APIs, and risk assessment workflows to ensure accuracy, fairness, security, and reliability.
 
 With AI playing a crucial role in underwriting, credit scoring, and fraud detection, our framework automates testing processes to detect model biases, security vulnerabilities, and performance bottlenecks. The automation pipeline leverages AI-powered test case generation, adversarial testing, and CI/CD integration to maintain robust and high-quality AI systems.
 
-🚀 Key Features
+## 🚀 Key Features
 
-✅ AI-Driven Test Automation - Automates the testing of AI models, APIs, and underwriting workflows.
-✅ Automated API Testing - Validates AI-powered APIs with functional, integration, and performance tests.
-✅ Bias and Fairness Testing - Ensures AI models provide unbiased credit decisions and risk assessments.
-✅ Prompt Injection & Security Testing - Simulates malicious inputs to test robustness against AI vulnerabilities.
-✅ Self-Healing Test Cases - AI-driven auto-correction of failed test cases.
-✅ CI/CD Pipeline with GitHub Actions - Fully automated testing and deployment process.
-✅ Containerized Deployment - Runs in a Dockerized environment with cloud integration.
-✅ Performance & Load Testing - Uses Locust for high-volume testing and response time validation.
+✅ **AI-Driven Test Automation** - Automates the testing of AI models, APIs, and underwriting workflows.
+✅ **Automated API Testing** - Validates AI-powered APIs with functional, integration, and performance tests.
+✅ **Bias and Fairness Testing** - Ensures AI models provide unbiased credit decisions and risk assessments.
+✅ **Prompt Injection & Security Testing** - Simulates malicious inputs to test robustness against AI vulnerabilities.
+✅ **Self-Healing Test Cases** - AI-driven auto-correction of failed test cases.
+✅ **CI/CD Pipeline with GitHub Actions** - Fully automated testing and deployment process.
+✅ **Containerized Deployment** - Runs in a Dockerized environment with cloud integration.
+✅ **Performance & Load Testing** - Uses Locust for high-volume testing and response time validation.
 
 This AI-powered testing framework ensures the reliability and fairness of AI agents used in fintech, helping lenders make data-driven and ethical loan decisions. 🚀💰
-
 ---
 
 ## 🛠️ Tech Stack & Frameworks
