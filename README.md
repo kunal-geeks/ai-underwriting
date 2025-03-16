@@ -8,14 +8,14 @@ With AI playing a crucial role in underwriting, credit scoring, and fraud detect
 
 ## 🚀 Key Features
 
-✅ **AI-Driven Test Automation** - Automates the testing of AI models, APIs, and underwriting workflows.
-✅ **Automated API Testing** - Validates AI-powered APIs with functional, integration, and performance tests.
-✅ **Bias and Fairness Testing** - Ensures AI models provide unbiased credit decisions and risk assessments.
-✅ **Prompt Injection & Security Testing** - Simulates malicious inputs to test robustness against AI vulnerabilities.
-✅ **Self-Healing Test Cases** - AI-driven auto-correction of failed test cases.
-✅ **CI/CD Pipeline with GitHub Actions** - Fully automated testing and deployment process.
-✅ **Containerized Deployment** - Runs in a Dockerized environment with cloud integration.
-✅ **Performance & Load Testing** - Uses Locust for high-volume testing and response time validation.
+✅ **AI-Driven Test Automation** - Automates the testing of AI models, APIs, and underwriting workflows.  
+✅ **Automated API Testing** - Validates AI-powered APIs with functional, integration, and performance tests.  
+✅ **Bias and Fairness Testing** - Ensures AI models provide unbiased credit decisions and risk assessments.  
+✅ **Prompt Injection & Security Testing** - Simulates malicious inputs to test robustness against AI vulnerabilities.  
+✅ **Self-Healing Test Cases** - AI-driven auto-correction of failed test cases.  
+✅ **CI/CD Pipeline with GitHub Actions** - Fully automated testing and deployment process.  
+✅ **Containerized Deployment** - Runs in a Dockerized environment with cloud integration.  
+✅ **Performance & Load Testing** - Uses Locust for high-volume testing and response time validation.  
 
 This AI-powered testing framework ensures the reliability and fairness of AI agents used in fintech, helping lenders make data-driven and ethical loan decisions. 🚀💰
 
@@ -31,7 +31,7 @@ This AI-powered testing framework ensures the reliability and fairness of AI age
 | 🤖 **LangChain**  | Testing LLM-based AI agents |
 | 🎯 **Celery**  | Async test execution |
 | 🐳 **Docker**  | Containerized test environments |
-| 💌 **Postman/Newman**  | API testing |
+| 📩 **Postman/Newman**  | API testing |
 | 🚀 **GitHub Actions**  | CI/CD pipeline |
 | 📊 **Locust**  | Performance testing |
 
@@ -39,13 +39,13 @@ This AI-powered testing framework ensures the reliability and fairness of AI age
 
 ## 🛠️ Setup Instructions
 
-### 1️⃣ Clone the Repository
+### 1⃣ Clone the Repository
 ```bash
- git clone https://github.com/kunal-geeks/ai-underwriting.git
- cd ai-underwriting
+git clone https://github.com/kunal-geeks/ai-underwriting.git
+cd ai-underwriting
 ```
 
-### 2️⃣ Run with Docker Compose (On Your Local Machine)
+### 2⃣ Run with Docker Compose (On Your Local Machine)
 
 🔹 **Create a `.env` file** inside the `docker` folder and add your `OPENAI_API_KEY` before proceeding.
 
@@ -62,7 +62,6 @@ docker compose -f docker/docker-compose-local.yml --env-file .env down
 ```bash
 docker compose -f docker/docker-compose-local.yml up --build --force-recreate
 ```
-✅ This command **rebuilds** the containers from scratch and **forces recreation** to apply all dependencies and configurations.
 
 #### 🖥️ For **Windows (PowerShell):**
 ```powershell
@@ -90,9 +89,9 @@ docker-compose -f docker/docker-compose-local.yml up --build --force-recreate
 
 To start **performance testing** using Locust:
 
-- First start the flask server locally by following command:
+- First start the Flask server locally by running the following command:
 ```bash
-  poetry run python src/app.py
+poetry run python src/app.py
 ```
 🌍 The API will be available at: `http://127.0.0.1:5001`
 
@@ -127,9 +126,9 @@ Once Locust is running, open your browser and go to:
 ✅ **Response:**
 ```json
 {
-  "ai_explanation": "Loan decision explanation...",
   "applicant": "Bob Williams",
-  "loan_decision": "Conditional Approval"
+  "loan_decision": "Conditional Approval",
+  "ai_explanation": "Medium Risk (Conditional Approval) based on credit score and revenue."
 }
 ```
 
@@ -149,5 +148,5 @@ The AI-powered underwriting system provides a robust, scalable, and automated ap
 
 ## 📌 Author
 🔹 **Kunal Sharma**  
-💻 [GitHub](https://github.com/kunal-geeks) | 🐦 [Twitter](https://x.com/kunal_ucet) | 📧 Email: kunal.sdet001@gmail.com
+💻 [GitHub](https://github.com/kunal-geeks) | 🕊 [Twitter](https://x.com/kunal_ucet) | 📧 Email: kunal.sdet001@gmail.com
 
