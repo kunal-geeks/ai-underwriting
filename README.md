@@ -138,15 +138,19 @@ cd ai-underwriting
 🔹 **Create a `.env` file** inside the `docker` folder and add your `OPENAI_API_KEY` before proceeding.
 
 #### 💻 For **MacOS/Linux:**
+🔹 Use this command to build Docker images from scratch, ignoring cached layers, ensuring all dependencies and changes are applied.
 ```bash
 docker compose -f docker/docker-compose-local.yml --env-file .env build --no-cache
 ```
+🔹 Use this command to start all services defined in docker-compose-local.yml, loading environment variables from the .env file.
 ```bash
 docker compose -f docker/docker-compose-local.yml --env-file .env up
 ```
+🔹 Use this command to stop and remove all running containers, networks, and volumes created by docker compose up.
 ```bash
 docker compose -f docker/docker-compose-local.yml --env-file .env down
 ```
+🔹 Use this command to rebuild images and recreate all containers from scratch, ensuring the latest changes are applied.
 ```bash
 docker compose -f docker/docker-compose-local.yml up --build --force-recreate
 ```
@@ -177,7 +181,7 @@ docker-compose -f docker/docker-compose-local.yml up --build --force-recreate
 
 To start **performance testing** using Locust:
 
-- First start the Flask server locally by running the following command:
+First start the Flask server locally by running the following command:
 ```bash
 poetry run python src/app.py
 ```
@@ -223,20 +227,20 @@ Once Locust is running, open your browser and go to:
 📩 **Request:**
 ```json
 {
-  "name": "Bob Williams",
-  "age": 42,
-  "revenue": 80000,
-  "credit_score": 700,
-  "loan_amount": 35000
+  "name": "Charlie Brown",
+  "age": 29,
+  "revenue": 40000,
+  "credit_score": 600,
+  "loan_amount": 25000
 }
 ```
 
-✅ **Response:**
+❌ **Response:**
 ```json
 {
-  "applicant": "Bob Williams",
-  "loan_decision": "Conditional Approval",
-  "ai_explanation": "Medium Risk (Conditional Approval) based on credit score and revenue."
+  "applicant": "Charlie Brown",
+  "explanation": "Loan rejected due to high risk factors.",
+  "loan_decision": "❌ Rejected"
 }
 ```
 
