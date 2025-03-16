@@ -16,7 +16,7 @@ With AI playing a crucial role in underwriting, credit scoring, and fraud detect
 👉 **CI/CD Pipeline with GitHub Actions** - Fully automated testing and deployment process.  
 👉 **Containerized Deployment** - Runs in a Dockerized environment.  
 👉 **Performance & Load Testing** - Uses Locust for high-volume testing and response time validation.  
-👉 **Nginx as Reverse Proxy for Security** - Protects API endpoints and handles SSL termination.  
+👉 **Nginx as Reverse Proxy for Security** -  Enhances security and scalability by forwarding traffic securely to backend services.  
 
 This AI-powered testing framework ensures the reliability and fairness of AI agents used in fintech, helping lenders make data-driven and ethical loan decisions. 🚀💰
 
