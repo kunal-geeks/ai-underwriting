@@ -8,14 +8,15 @@ With AI playing a crucial role in underwriting, credit scoring, and fraud detect
 
 ## 🚀 Key Features
 
-✅ **AI-Driven Test Automation** - Automates the testing of AI models, APIs, and underwriting workflows.  
-✅ **Automated API Testing** - Validates AI-powered APIs with functional, integration, and performance tests.  
-✅ **Bias and Fairness Testing** - Ensures AI models provide unbiased credit decisions and risk assessments.  
-✅ **Prompt Injection & Security Testing** - Simulates malicious inputs to test robustness against AI vulnerabilities.  
-✅ **Self-Healing Test Cases** - AI-driven auto-correction of failed test cases.  
-✅ **CI/CD Pipeline with GitHub Actions** - Fully automated testing and deployment process.  
-✅ **Containerized Deployment** - Runs in a Dockerized environment.  
-✅ **Performance & Load Testing** - Uses Locust for high-volume testing and response time validation.  
+👉 **AI-Driven Test Automation** - Automates the testing of AI models, APIs, and underwriting workflows.  
+👉 **Automated API Testing** - Validates AI-powered APIs with functional, integration, and performance tests.  
+👉 **Bias and Fairness Testing** - Ensures AI models provide unbiased credit decisions and risk assessments.  
+👉 **Prompt Injection & Security Testing** - Simulates malicious inputs to test robustness against AI vulnerabilities.  
+👉 **Self-Healing Test Cases** - AI-driven auto-correction of failed test cases.  
+👉 **CI/CD Pipeline with GitHub Actions** - Fully automated testing and deployment process.  
+👉 **Containerized Deployment** - Runs in a Dockerized environment.  
+👉 **Performance & Load Testing** - Uses Locust for high-volume testing and response time validation.  
+👉 **Nginx as Reverse Proxy for Security** - Protects API endpoints and handles SSL termination.  
 
 This AI-powered testing framework ensures the reliability and fairness of AI agents used in fintech, helping lenders make data-driven and ethical loan decisions. 🚀💰
 
@@ -26,81 +27,88 @@ This AI-powered testing framework ensures the reliability and fairness of AI age
 | Technology    | Purpose                          |
 |--------------|---------------------------------|
 | 🐍 **Python**  | Core language for AI and testing  |
-| 🧪 **PyTest**  | Unit, integration, and fairness testing |
+| 🤪 **PyTest**  | Unit, integration, and fairness testing |
 | 🌐 **Flask**  | Mock AI API & endpoints |
 | 🤖 **LangChain**  | Testing LLM-based AI agents |
 | 🎯 **Celery**  | Async test execution |
-| 🐳 **Docker**  | Containerized test environments |
+| 🐋 **Docker**  | Containerized test environments |
 | 📩 **Postman/Newman**  | API testing |
 | 🚀 **GitHub Actions**  | CI/CD pipeline |
 | 📊 **Locust**  | Performance testing |
+| 🛡 **Nginx**  | Reverse proxy & security |
 
 ---
 
 ## 📂 Project Folder Structure (Blueprint)
 
-**Note: This is an overview of the folder structure, not the actual representation.**
-
+```
 ai-underwriting/
-├── docs/                       # Project documentation
-│   └── design.md               # Design and architecture decisions
-├── src/                        # Source code
-│   ├── __init__.py             # Package initialization
-│   ├── api/                    # API-related files (Flask)
-│   │   ├── __init__.py         # API entry point
-│   │   ├── routes.py           # Define all API endpoints
-│   │   └── config.py           # API-specific configurations (environment vars, secrets)
-│   ├── ai_agent/               # AI model and agent-related code
-│   │   ├── __init__.py         # AI agent initialization
-│   │   ├── model.py            # AI model code (LangChain or similar)
-│   │   ├── utils.py            # Helper functions (data preprocessing, post-processing)
-│   │   
-│   ├── tests/                  # Test-related files (unit, integration, system, security, etc.)
-│       │── unit/                   # Unit tests for different components
-│       │   ├── test_agent.py       # Unit tests for the AI agent (Underwriting logic)
-│       │   ├── test_api.py         # Unit tests for testing api
-│       │── integration/            # Integration tests
-│       │   ├── test_api.py         # Integration tests for API endpoints
-│       │── system/                 # Full system tests
-│       │   ├── test_end_to_end.py  # Full system tests
-│       │── performance/            # Performance and load testing
-│       │   ├── test_performance.py # Performance and load testing
-│       │── security/               # Security testing
+├── docs/                     # Project documentation
+│   └── design.md             # Design and architecture decisions
+├── src/                      # Source code
+│   ├── __init__.py           # Package initialization
+│   ├── app.py                # Flask application entry point
+│   ├── logger.py             # Logging utility
+│   ├── loguru_logger.py      # Enhanced logging with Loguru
+│   ├── setup.py              # Setup script for package installation
+│   ├── pytest.ini            # Pytest configuration file
+│   ├── api/                  # API-related files (Flask)
+│   │   ├── __init__.py       # API entry point
+│   │   ├── routes.py         # Define all API endpoints
+│   │   └── config.py         # API-specific configurations (environment vars, secrets)
+│   ├── ai_agent/             # AI model and agent-related code
+│   │   ├── __init__.py       # AI agent initialization
+│   │   ├── model.py          # AI model code (LangChain or similar)
+│   │   ├── utils.py          # Helper functions (data preprocessing, post-processing)
+│   ├── tests/                # Test-related files (unit, integration, system, security, etc.)
+│       │── __init__.py        # Test package initialization
+│       │── unit/              # Unit tests
+│       │   ├── __init__.py    # Unit test initialization
+│       │   ├── test_agent.py  # AI agent unit tests
+│       │   ├── test_api.py    # API unit tests
+│       │── integration/       # Integration tests
+│       │   ├── __init__.py    # Integration test initialization
+│       │   ├── test_api.py    # API integration tests
+│       │── system/            # Full system tests
+│       │   ├── __init__.py    # System test initialization
+│       │   ├── test_end_to_end.py  # End-to-end system tests
+│       │── security/          # Security testing
+│       │   ├── __init__.py    # Security test initialization
 │       │   ├── test_security.py    # Security testing (prompt injection, vulnerabilities)
-│       │── fairness/               # Fairness & bias validation
+│       │── fairness/          # Fairness & bias validation
+│       │   ├── __init__.py    # fairness test initialization
 │       │   ├── test_fairness.py    # Bias and fairness validation
-│       │── prompt_injection/       # Prompt injection attack testing
-│       │   ├── test_prompt_injection.py  # Prompt injection attacks testing
-│       │── auto_test/              # AI-driven self-healing test cases
+│       │── auto_test/         # AI-driven self-healing test cases
+│       │   ├── __init__.py    # auto test initialization
 │       │   ├── test_auto_test.py   # AI-driven self-healing test cases
-|       └── synthetic_data.py   # Script for generating synthetic loan applications
-|       └── conftest.py   # Test configuration set up
-├── config/                     # Configuration files for different environments
-│   ├── dev/                    # Development configuration
-│   │   ├── config.yml          # Dev environment config
-│   ├── prod/                   # Production configuration
-│   │   ├── config.yml          # Production environment config
-│   ├── qa/                     # QA environment configuration
-│   │   ├── config.yml          # QA environment config
-│   ├── nginx/                  # Nginx configuration for reverse proxy and SSL
-│   │   ├── ssl/                # SSL certificates
+├── config/                   # Configuration files for different environments
+│   ├── dev/                  # Development configuration
+│   │   ├── config.yml        # Dev environment config
+│   ├── prod/                 # Production configuration
+│   │   ├── config.yml        # Production environment config
+│   ├── qa/                   # QA environment configuration
+│   │   ├── config.yml        # QA environment config
+│   ├── nginx/                # Nginx configuration for reverse proxy and SSL
+│   │   ├── ssl/              # SSL certificates
 │   │   │   ├── nginx-selfsigned.crt  # Self-signed certificate
 │   │   │   ├── nginx-selfsigned.key  # Self-signed private key
-│   │   ├── nginx-local.conf    # Local Nginx configuration
-│   │   ├── nginx.conf          # Production Nginx configuration
+│   │   ├── nginx-local.conf  # Local Nginx configuration
+│   │   ├── nginx.conf        # Production Nginx configuration
 │   │   ├── gunicorn_config.py  # Gunicorn configuration
-├── docker/                     # Docker configurations
-│   ├── .env                    # Environment variables
-│   ├── Dockerfile.dev          # Dockerfile for development environment
-│   ├── Dockerfile.prod         # Dockerfile for production environment
+├── docker/                   # Docker configurations
+│   ├── .env                  # Environment variables
+│   ├── Dockerfile.dev        # Dockerfile for development environment
+│   ├── Dockerfile.prod       # Dockerfile for production environment
 │   ├── docker-compose-local.yml # Local Docker Compose configuration
 │   ├── docker-compose-prod.yml # Production Docker Compose configuration
-├── generated_data/             # Auto-generated data for tests and simulations
-├── reports/                    # Test reports and logs
-├── Jenkinsfile                 # CI/CD pipeline for Jenkins
-├── README.md                   # Project overview and setup instructions
-├── poetry.lock                 # Poetry dependency lock file
-├── pyproject.toml              # Python project configuration
+├── reports/                  # Test reports and logs
+├── Jenkinsfile               # CI/CD pipeline for Jenkins
+├── README.md                 # Project overview and setup instructions
+├── poetry.lock               # Poetry dependency lock file
+├── pyproject.toml            # Python project configuration
+```
+
+---
 
 ## 🛠️ Setup Instructions
 
