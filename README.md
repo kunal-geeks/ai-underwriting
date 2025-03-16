@@ -240,7 +240,7 @@ Once Locust is running, open your browser and go to:
 {
   "applicant": "Charlie Brown",
   "explanation": "Loan rejected due to high risk factors.",
-  "loan_decision": "❌ Rejected"
+  "loan_decision": "Rejected"
 }
 ```
 
