@@ -43,6 +43,9 @@ This AI-powered testing framework ensures the reliability and fairness of AI age
 
 ```
 ai-underwriting/
+├── .github/
+│   ├── workflows/
+│   │   ├── prod_deploy.yml   # CI/CD deployment workflow for production
 ├── docs/                     # Project documentation
 │   └── design.md             # Design and architecture decisions
 ├── src/                      # Source code
