@@ -126,6 +126,26 @@ Once Locust is running, open your browser and go to:
 ✅ **Response:**
 ```json
 {
+  "ai_explanation": "To evaluate Bob Williams' loan application, let's assess the provided data against the defined criteria:\n\n- **Credit Score**: 700\n- **Annual Revenue**: $80,000\n- **Loan Amount Requested**: $35,000\n\nSince Bob's credit score and revenue fall into the Medium Risk category and the loan amount requested is also within the acceptable range for this category:\n\n**Decision**: Medium Risk (Conditional Approval)\n\n**Explanation**: Bob Williams meets the criteria for a Medium Risk application. The recommended action is to issue a **conditional approval** for the loan, possibly requiring additional documentation.",
+  "applicant": "Bob Williams",
+  "loan_decision": "Conditional Approval"
+}
+```
+
+📩 **Request:**
+```json
+{
+  "name": "Bob Williams",
+  "age": 42,
+  "revenue": 80000,
+  "credit_score": 700,
+  "loan_amount": 35000
+}
+```
+
+✅ **Response:**
+```json
+{
   "applicant": "Bob Williams",
   "loan_decision": "Conditional Approval",
   "ai_explanation": "Medium Risk (Conditional Approval) based on credit score and revenue."
