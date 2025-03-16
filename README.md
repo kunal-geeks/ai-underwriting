@@ -9,19 +9,12 @@ With AI playing a crucial role in underwriting, credit scoring, and fraud detect
 ## 🚀 Key Features
 
 ✅ **AI-Driven Test Automation** - Automates the testing of AI models, APIs, and underwriting workflows.
-
 ✅ **Automated API Testing** - Validates AI-powered APIs with functional, integration, and performance tests.
-
 ✅ **Bias and Fairness Testing** - Ensures AI models provide unbiased credit decisions and risk assessments.
-
 ✅ **Prompt Injection & Security Testing** - Simulates malicious inputs to test robustness against AI vulnerabilities.
-
 ✅ **Self-Healing Test Cases** - AI-driven auto-correction of failed test cases.
-
 ✅ **CI/CD Pipeline with GitHub Actions** - Fully automated testing and deployment process.
-
 ✅ **Containerized Deployment** - Runs in a Dockerized environment with cloud integration.
-
 ✅ **Performance & Load Testing** - Uses Locust for high-volume testing and response time validation.
 
 This AI-powered testing framework ensures the reliability and fairness of AI agents used in fintech, helping lenders make data-driven and ethical loan decisions. 🚀💰
@@ -38,7 +31,7 @@ This AI-powered testing framework ensures the reliability and fairness of AI age
 | 🤖 **LangChain**  | Testing LLM-based AI agents |
 | 🎯 **Celery**  | Async test execution |
 | 🐳 **Docker**  | Containerized test environments |
-| 📬 **Postman/Newman**  | API testing |
+| 💌 **Postman/Newman**  | API testing |
 | 🚀 **GitHub Actions**  | CI/CD pipeline |
 | 📊 **Locust**  | Performance testing |
 
@@ -134,29 +127,9 @@ Once Locust is running, open your browser and go to:
 ✅ **Response:**
 ```json
 {
-  "ai_explanation": "To evaluate Bob Williams' loan application, let's assess the provided data against the defined criteria:\n\n- **Credit Score**: 700\n- **Annual Revenue**: $80,000\n- **Loan Amount Requested**: $35,000\n\nSince Bob's credit score and revenue fall into the Medium Risk category and the loan amount requested is also within the acceptable range for this category:\n\n**Decision**: Medium Risk (Conditional Approval)\n\n**Explanation**: Bob Williams meets the criteria for a Medium Risk application. The recommended action is to issue a **conditional approval** for the loan, possibly requiring additional documentation.",
+  "ai_explanation": "Loan decision explanation...",
   "applicant": "Bob Williams",
   "loan_decision": "Conditional Approval"
-}
-```
-
-📩 **Request:**
-```json
-{
-  "name": "Charlie Brown",
-  "age": 29,
-  "revenue": 40000,
-  "credit_score": 600,
-  "loan_amount": 25000
-}
-```
-
-❌ **Response:**
-```json
-{
-  "applicant": "Charlie Brown",
-  "explanation": "Loan rejected due to high risk factors.",
-  "loan_decision": "❌ Rejected"
 }
 ```
 
